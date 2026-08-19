@@ -23,6 +23,9 @@ func _ready():
 	patrol_points = generate_patrol_points()
 	timer.wait_time = randf_range(2.0, 5.0)
 	timer.start()
+	detection_area.body_entered.connect(_on_detection_area_body_entered)
+	detection_area.body_exited.connect(_on_detection_area_body_exited)
+	timer.timeout.connect(_on_patrol_timer_timeout)
 
 func generate_patrol_points():
 	var points = []
@@ -48,18 +51,12 @@ func _physics_process(delta):
 		patrol(delta)
 	
 	move_and_slide()
-	
-	if mesh:
-		if is_chasing:
-			mesh.material.albedo_color = Color(0.8, 0.1, 0.1)
-		else:
-			mesh.material.albedo_color = Color(0.3, 0.1, 0.1)
 
 func patrol(delta):
 	if is_waiting:
 		wait_timer -= delta
-		velocity.x = 0
-		velocity.z = 0
+		velocity.x = move_toward(velocity.x, 0, 0.1)
+		velocity.z = move_toward(velocity.z, 0, 0.1)
 		if wait_timer <= 0:
 			is_waiting = false
 			current_patrol_index = (current_patrol_index + 1) % patrol_points.size()
@@ -69,7 +66,6 @@ func patrol(delta):
 		return
 	
 	var target_point = patrol_points[current_patrol_index]
-	var direction = (target_point - global_position).normalized()
 	
 	nav_agent.target_position = target_point
 	
@@ -115,7 +111,8 @@ func chase_target():
 
 func start_chase():
 	is_chasing = true
-	$ChaseSound.play()
+	if $ChaseSound.playing == false:
+		$ChaseSound.play()
 
 func stop_chase():
 	is_chasing = false

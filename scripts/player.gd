@@ -12,19 +12,17 @@ var current_speed = SPEED
 @onready var camera = $Head/Camera3D
 @onready var raycast = $Head/Camera3D/Raycast
 @onready var interact_label = $UI/InteractLabel
-@onready var crosshair = $UI/Crosshair
+@onready var crosshair_dot = $UI/CrosshairUI/CrosshairDot
 @onready var breath_sound = $BreathSound
 
 var keys_collected = 0
 var is_alive = true
-var can_breathe = true
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	$UI/GameOverScreen.visible = false
 	$UI/WinScreen.visible = false
 	$UI/KeyCount.text = "Kunci: 0/5"
-	$UI/FadeIn.play("fade_in")
 
 func _unhandled_input(event):
 	if not is_alive:
@@ -67,7 +65,7 @@ func _physics_process(delta):
 	
 	if raycast.is_colliding():
 		var collider = raycast.get_collider()
-		if collider.is_in_group("keys"):
+		if collider and collider.is_in_group("keys"):
 			interact_label.visible = true
 			if Input.is_action_just_pressed("interact"):
 				pickup_key(collider)
@@ -75,10 +73,6 @@ func _physics_process(delta):
 			interact_label.visible = false
 	else:
 		interact_label.visible = false
-	
-	if velocity.length() > 1.0 and is_on_floor():
-		if can_breathe:
-			breath_sound.pitch_scale = 1.0 + (current_speed - SPEED) * 0.1
 
 func pickup_key(key_node):
 	keys_collected += 1
@@ -98,8 +92,8 @@ func game_over():
 	if not is_alive:
 		return
 	is_alive = false
+	velocity = Vector3.ZERO
 	$UI/GameOverScreen.visible = true
-	$UI/GameOverScreen/AnimationPlayer.play("game_over")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	$DeathSound.play()
 
