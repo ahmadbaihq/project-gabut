@@ -484,7 +484,7 @@ mesh = SubResource("box_inner_v")
 [node name="Col" type="CollisionShape3D" parent="Map/NavigationRegion3D/Barricade1"]
 shape = SubResource("shape_inner_v")
 
-[node name="Key1" type="Area3D" parent="." groups=["keys"]]
+[node name="Key1" type="StaticBody3D" parent="." groups=["keys"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 1.5, 0)
 collision_layer = 8
 
@@ -495,7 +495,7 @@ mesh = SubResource("sphere_key")
 [node name="Col" type="CollisionShape3D" parent="Key1"]
 shape = SubResource("shape_key")
 
-[node name="Key2" type="Area3D" parent="." groups=["keys"]]
+[node name="Key2" type="StaticBody3D" parent="." groups=["keys"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.5, 0)
 collision_layer = 8
 
@@ -506,7 +506,7 @@ mesh = SubResource("sphere_key")
 [node name="Col" type="CollisionShape3D" parent="Key2"]
 shape = SubResource("shape_key")
 
-[node name="Key3" type="Area3D" parent="." groups=["keys"]]
+[node name="Key3" type="StaticBody3D" parent="." groups=["keys"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -18)
 collision_layer = 8
 
@@ -517,7 +517,7 @@ mesh = SubResource("sphere_key")
 [node name="Col" type="CollisionShape3D" parent="Key3"]
 shape = SubResource("shape_key")
 
-[node name="Key4" type="Area3D" parent="." groups=["keys"]]
+[node name="Key4" type="StaticBody3D" parent="." groups=["keys"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 1.5, 16)
 collision_layer = 8
 
@@ -528,7 +528,7 @@ mesh = SubResource("sphere_key")
 [node name="Col" type="CollisionShape3D" parent="Key4"]
 shape = SubResource("shape_key")
 
-[node name="Key5" type="Area3D" parent="." groups=["keys"]]
+[node name="Key5" type="StaticBody3D" parent="." groups=["keys"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1.5, 16)
 collision_layer = 8
 
