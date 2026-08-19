@@ -7,9 +7,12 @@ const MOUSE_SENSITIVITY = 0.002
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var current_speed = SPEED
+var flashlight_on = true
+var flicker_timer = 0.0
 
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
+@onready var flashlight = $Head/Camera3D/Flashlight
 @onready var raycast = $Head/Camera3D/Raycast
 @onready var interact_label = $UI/InteractLabel
 @onready var crosshair_dot = $UI/CrosshairUI/CrosshairDot
@@ -23,6 +26,8 @@ func _ready():
 	$UI/GameOverScreen.visible = false
 	$UI/WinScreen.visible = false
 	$UI/KeyCount.text = "Kunci: 0/5"
+	if flashlight:
+		flashlight.visible = true
 
 func _unhandled_input(event):
 	if not is_alive:
@@ -35,6 +40,9 @@ func _unhandled_input(event):
 	
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	if event.is_action_pressed("flashlight"):
+		toggle_flashlight()
 
 func _physics_process(delta):
 	if not is_alive:
@@ -63,6 +71,8 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	
+	flicker_flashlight(delta)
+	
 	if raycast.is_colliding():
 		var collider = raycast.get_collider()
 		if collider and collider.is_in_group("keys"):
@@ -73,6 +83,21 @@ func _physics_process(delta):
 			interact_label.visible = false
 	else:
 		interact_label.visible = false
+
+func toggle_flashlight():
+	flashlight_on = !flashlight_on
+	if flashlight:
+		flashlight.visible = flashlight_on
+
+func flicker_flashlight(delta):
+	if not flashlight or not flashlight_on:
+		return
+	
+	flicker_timer += delta
+	if randf() < 0.005:
+		flashlight.light_energy = randf_range(2.0, 3.5)
+	elif flashlight.light_energy < 3.0:
+		flashlight.light_energy = move_toward(flashlight.light_energy, 3.0, delta * 5.0)
 
 func pickup_key(key_node):
 	keys_collected += 1

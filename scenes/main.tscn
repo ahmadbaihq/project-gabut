@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://blq7a64hps5se" path="res://scripts/game_manager.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="2"]
-[ext_resource type="PackedScene" uid="uid://monster_character" path="res://scenes/monster_character.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/monster_character.tscn" id="3"]
 [ext_resource type="Texture2D" uid="uid://dui7sn6tr5hil" path="res://assets/textures/brick/Horror_Brick_07-128x128.png" id="tex_brick"]
 [ext_resource type="Texture2D" uid="uid://ce46bdqfpmfp" path="res://assets/textures/brick/Horror_Brick_11-128x128.png" id="tex_brick2"]
 [ext_resource type="Texture2D" uid="uid://rus52ocuqgle" path="res://assets/textures/floor/Horror_Floor_04-128x128.png" id="tex_floor"]
@@ -543,7 +543,7 @@ shape = SubResource("shape_key")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 18)
 
 [node name="Monster" parent="." instance=ExtResource("3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.03678, 1.29976, 8.25591)
 
 [node name="SpawnLight" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 16)

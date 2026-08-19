@@ -34,6 +34,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
 target_position = Vector3(0, 0, -3)
 collision_mask = 4
 
+[node name="Flashlight" type="SpotLight3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.2, -0.5)
+light_color = Color(1, 0.95, 0.85, 1)
+light_energy = 3.0
+light_indirect_energy = 1.0
+shadow_enabled = true
+spot_angle = 40.0
+spot_attenuation = 1.5
+range_attenuation = true
+range_max = 30.0
+
 [node name="Crosshair" type="MeshInstance3D" parent="Head/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 mesh = SubResource("BoxMesh_crosshair")
