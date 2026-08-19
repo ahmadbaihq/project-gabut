@@ -1,8 +1,13 @@
-[gd_scene load_steps=26 format=3 uid="uid://main001"]
+[gd_scene load_steps=35 format=3 uid="uid://main001"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/monster.tscn" id="3"]
+[ext_resource type="Texture2D" path="res://assets/textures/floor/Horror_Floor_04-128x128.png" id="tex_floor"]
+[ext_resource type="Texture2D" path="res://assets/textures/brick/Horror_Brick_07-128x128.png" id="tex_wall"]
+[ext_resource type="Texture2D" path="res://assets/textures/stone/Horror_Stone_03-128x128.png" id="tex_ceiling"]
+[ext_resource type="Texture2D" path="res://assets/textures/wall/Horror_Wall_05-128x128.png" id="tex_inner"]
+[ext_resource type="Texture2D" path="res://assets/textures/metal/Horror_Metal_08-128x128.png" id="tex_door"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
 sky_top_color = Color(0.05, 0, 0.1, 1)
@@ -26,7 +31,8 @@ fog_density = 0.05
 fog_sky_affect = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
-albedo_color = Color(0.15, 0.12, 0.1, 1)
+albedo_texture = ExtResource("tex_floor")
+uv1_scale = Vector3(5, 5, 5)
 roughness = 0.9
 
 [sub_resource type="BoxMesh" id="BoxMesh_floor"]
@@ -36,14 +42,16 @@ size = Vector3(40, 0.3, 40)
 size = Vector3(40, 0.3, 40)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ceiling"]
-albedo_color = Color(0.08, 0.06, 0.06, 1)
+albedo_texture = ExtResource("tex_ceiling")
+uv1_scale = Vector3(5, 5, 5)
 roughness = 0.9
 
 [sub_resource type="BoxMesh" id="BoxMesh_ceiling"]
 size = Vector3(40, 0.3, 40)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wall"]
-albedo_color = Color(0.1, 0.08, 0.08, 1)
+albedo_texture = ExtResource("tex_wall")
+uv1_scale = Vector3(2, 1, 1)
 roughness = 0.85
 
 [sub_resource type="BoxMesh" id="BoxMesh_wall"]
@@ -59,7 +67,8 @@ size = Vector3(0.3, 4, 40)
 size = Vector3(0.3, 4, 40)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_inner_wall"]
-albedo_color = Color(0.12, 0.09, 0.09, 1)
+albedo_texture = ExtResource("tex_inner")
+uv1_scale = Vector3(2, 1, 1)
 roughness = 0.85
 
 [sub_resource type="BoxMesh" id="BoxMesh_inner_wall_h"]
@@ -86,6 +95,15 @@ height = 0.6
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_key"]
 radius = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_monster_body"]
+albedo_color = Color(0.15, 0.02, 0.02, 1)
+emission_enabled = true
+emission = Color(0.4, 0, 0, 1)
+emission_energy_multiplier = 1.0
+albedo_texture = ExtResource("tex_door")
+uv1_scale = Vector3(1, 2, 1)
+roughness = 0.7
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_main"]
 
@@ -322,6 +340,10 @@ light_color = Color(1, 0.4, 0.1, 1)
 light_energy = 0.25
 omni_range = 8.0
 omni_attenuation = 2.0
+
+[node name="FlickerTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
 
 [node name="UI" type="CanvasLayer" parent="."]
 
